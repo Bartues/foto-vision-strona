@@ -84,73 +84,45 @@
   .burger span{width:26px;height:3px;background:var(--ink);border-radius:3px;transition:.25s}
 
   /* ---------- Hero ---------- */
- .hero {
-    position:relative;
-    min-height:650px;
-    display:flex;
-    align-items:center;
-    overflow:hidden;
-    color:#fff;
-}
-
-.hero-bg {
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    z-index:0;
-}
-
-.hero-overlay {
-    position:absolute;
-    inset:0;
+  .hero{
+    position:relative;color:#fff;overflow:hidden;
     background:
-        linear-gradient(
-            90deg,
-            rgba(0,0,0,.65),
-            rgba(0,0,0,.25)
-        );
-    z-index:1;
-}
-
-.hero-inner {
-    position:relative;
-    z-index:2;
-}
-
-.hero-content {
-    max-width:700px;
-}
-
-.hero .eyebrow {
-    background:rgba(255,255,255,.15);
-    color:#fff;
-}
-
-.hero h1 {
-    color:#fff;
-}
-
-.hero .hl {
-    color:#9be15d;
-}
-
-@media(max-width:700px){
-
-    .hero {
-        min-height:520px;
-    }
-
-    .hero-bg {
-        object-position:center;
-    }
-
-    .hero-content {
-        padding:30px 0;
-    }
-
-}
+      radial-gradient(1100px 600px at 82% -10%,rgba(74,222,99,.28),transparent 60%),
+      linear-gradient(150deg,var(--green-900) 0%,var(--green-800) 45%,var(--green-700) 100%);
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;opacity:.09;pointer-events:none;
+    background-image:radial-gradient(rgba(255,255,255,.9) 1.2px,transparent 1.3px);
+    background-size:26px 26px;
+  }
+  .hero-inner{
+    position:relative;z-index:2;display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;
+    align-items:center;padding:84px 0 96px;
+  }
+  .hero h1{font-size:clamp(2.1rem,4.4vw,3.5rem);margin-bottom:20px}
+  .hero h1 .hl{color:var(--green-400)}
+  .hero p.lead{font-size:1.18rem;color:rgba(255,255,255,.9);max-width:560px;margin-bottom:32px}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px}
+  .hero-stats{display:flex;gap:34px;flex-wrap:wrap}
+  .hero-stats .s{display:flex;flex-direction:column}
+  .hero-stats .n{font-size:1.9rem;font-weight:800;color:#fff;line-height:1}
+  .hero-stats .l{font-size:.88rem;color:rgba(255,255,255,.75);margin-top:6px}
+  .hero-media{position:relative}
+  .hero-media img,.hero-media video{
+    border-radius:22px;box-shadow:var(--shadow-lg);
+    aspect-ratio:16/9;object-fit:cover;object-position:center;width:100%;
+    border:6px solid rgba(255,255,255,.14);
+    background:var(--green-900);
+  }
+  .hero-badge{
+    position:absolute;bottom:-22px;left:-22px;background:#fff;color:var(--ink);
+    padding:16px 20px;border-radius:16px;box-shadow:var(--shadow-lg);
+    display:flex;align-items:center;gap:14px;max-width:270px;
+  }
+  .hero-badge .ico{width:44px;height:44px;flex:none;border-radius:12px;background:var(--green-050);
+    display:grid;place-items:center;color:var(--green-700)}
+  .hero-badge b{display:block;font-size:1rem}
+  .hero-badge span{font-size:.82rem;color:var(--muted)}
 
   /* ---------- Trust bar ---------- */
   .trust{background:var(--green-025);border-bottom:1px solid var(--line)}
@@ -377,6 +349,34 @@
   footer ul a:hover{color:var(--green-400)}
   .foot-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:22px;
     display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:.88rem}
+    .social-icons {
+    display:flex;
+    gap:12px;
+    margin-top:20px;
+}
+
+.social-icons a {
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.15);
+    display:grid;
+    place-items:center;
+    color:#fff;
+    transition:.25s;
+}
+
+.social-icons svg {
+    width:22px;
+    height:22px;
+    fill:currentColor;
+}
+
+.social-icons a:hover {
+    background:var(--green-600);
+    transform:translateY(-3px);
+}
 
   /* ---------- Lightbox ---------- */
   .lb{position:fixed;inset:0;background:rgba(9,26,14,.92);z-index:200;display:none;
@@ -444,7 +444,7 @@
       <a href="#oferta">Oferta</a>
       <a href="#materialy">Co sortujemy</a>
       <a href="#realizacje">Realizacje</a>
-      <a href="#o-mnie">O mnie</a>
+      <a href="#o-nas">O nas</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
     <div class="nav-cta">
@@ -460,51 +460,23 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="home">
-
-  <video class="hero-bg"
-         src="video_1.mp4"
-         autoplay
-         loop
-         muted
-         playsinline
-         preload="auto"
-         poster="img/sorter.jpg"
-         aria-label="Sorter optyczny GroTech ZF300 w pracy">
-  </video>
-
-  <div class="hero-overlay"></div>
-
   <div class="wrap hero-inner">
-    <div class="reveal in hero-content">
-
-      <span class="eyebrow">
-        Sortowaniki optyczne • Sprzedaż • Wynajem
-      </span>
-
-      <h1>
-        Pełna automatyzacja.
-        <span class="hl">Maksymalna wydajność.</span>
-      </h1>
-
-      <p class="lead">
-        Zaawansowane systemy sortowania dopasowane do każdej branży –
-        od rolnictwa po recykling tworzyw sztucznych.
-      </p>
-
+    <div class="reveal in">
+      <span class="eyebrow" style="background:rgba(255,255,255,.12);color:#fff">Sortowaniki optyczne • Sprzedaż • Wynajem</span>
+      <h1>Pełna automatyzacja. <span class="hl">Maksymalna wydajność.</span></h1>
+      <p class="lead">Zaawansowane systemy sortowania dopasowane do każdej branży – od rolnictwa po recykling tworzyw sztucznych.</p>
       <div class="hero-cta">
-        <a href="#kontakt" class="btn btn-primary">
-          Zamów sortowanie / wycenę
-        </a>
-
-        <a href="#uslugi" class="btn btn-ghost">
-          Co oferujemy
-        </a>
+        <a href="#kontakt" class="btn btn-primary">Zamów sortowanie / wycenę</a>
+        <a href="#uslugi" class="btn btn-ghost">Co oferujemy</a>
       </div>
-
+    </div>
+    <div class="hero-media reveal in">
+      <video src="video_1.mp4" autoplay loop muted playsinline preload="auto"
+             poster="img/sorter.jpg" aria-label="Sorter optyczny GroTech ZF300 w pracy"></video>
     </div>
   </div>
-
 </section>
+
 <!-- ============ TRUST BAR ============ -->
 <div class="trust">
   <div class="wrap trust-inner">
@@ -526,9 +498,9 @@
     <div class="grid-services">
 
       <div class="card reveal">
-        <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2"/><path d="M12 3v4M12 17v4M3 12h4M17 12h4"/></svg></div>
+        <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"stroke="currentColor" stroke-width="2"stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v10H3z"/><path d="M14 10h4l3 3v4h-7z"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></svg></div>
         <h3>Sortowanie mobilne</h3>
-        <p>Szybkie, precyzyjne rozdzielanie materiałów sypkich.</p>
+        <p>Kompleksowa mobilna linia sortująca z taśmociągami.</p>
         <ul>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Dojazd na terenie całej Polski</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Wydajność do 3 ton/h</li>
@@ -537,29 +509,29 @@
       </div>
 
       <div class="card reveal">
-        <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 12 3 4 7v10l8 4 8-4V7z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg></div>
+        <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 11H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/><path d="M9 12v4"/><path d="M15 12v4"/></svg></div>
         <h3>Sprzedaż maszyn</h3>
         <p>Sortery optyczne i urządzenia dobrane do Twojego produktu i wydajności.</p>
         <ul>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Dobór modelu i konfiguracji</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Bezpośrednie źródło u producenta</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Od producenta po konfiguracje na miejscu</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Uruchomienie i szkolenie z obsługi</li>
         </ul>
       </div>
 
       <div class="card reveal">
-        <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 20h10M12 16v4"/></svg></div>
+        <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
         <h3>Wynajem urządzeń</h3>
         <p>Elastyczny wynajem maszyn i linii technologicznej.</p>
         <ul>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Krótko- i długoterminowo</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Sorter lub cała linia</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Wsparcie techniczne w cenie</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Wsparcie techniczne</li>
         </ul>
       </div>
 
       <div class="card reveal">
-        <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17h4l2-9 3 14 2-7h4"/><circle cx="20" cy="9" r="1.5"/></svg></div>
+        <div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V8l6 4V8l6 4V5h6v16H3z"/><path d="M7 21v-4h3v4M15 21v-4h3v4"/></svg></div>
         <h3>Linie produkcyjne</h3>
         <p>Nie tylko sortowniki — kompletujemy całe ciągi technologiczne.</p>
         <ul>
@@ -575,8 +547,8 @@
         <p>Serwisujemy i kalibrujemy osobiście — bez czekania na techników z zagranicy.</p>
         <ul>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Konfiguracja programów sortowania</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Naprawy i części zamienne</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Szybka reakcja na terenie Polski</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Możliwość zdalnej kalibracji</li>
         </ul>
       </div>
 
@@ -585,8 +557,8 @@
         <h3>Doradztwo i dobór</h3>
         <p>Pomogę dobrać rozwiązanie do produktu, budżetu i oczekiwanej wydajności.</p>
         <ul>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Testy sortowania Twojego materiału</li>
-          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Analiza opłacalności inwestycji</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Testy sortowania Twojego materiału przed zakupem</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Serwis i nauka obsługi</li>
           <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Wsparcie na każdym etapie</li>
         </ul>
       </div>
@@ -757,17 +729,22 @@
 </section>
 
 <!-- ============ ABOUT ============ -->
-<section class="sec about" id="o-mnie">
+<section class="sec about" id="o-nas">
   <div class="wrap about-grid">
     <div class="about-media reveal">
       <img class="main" src="img/team-machine.jpg" alt="Krzysztof Borkowski przy sorterze wraz ze specjalistą z Chin">
     </div>
     <div class="about reveal">
-      <span class="eyebrow">O mnie</span>
+      <span class="eyebrow">O nas</span>
       <h2>Krzysztof Borkowski</h2>
       <div class="role">Foto-Vision Sortowanie — właściciel, technik, doradca</div>
-      <p>Sortowaniem i maszynami sortującymi zajmuję się <strong>osobiście</strong>. Jestem w stałym kontakcie z producentami z Chin, dzięki czemu mam dostęp do sprawdzonych urządzeń w atrakcyjnych warunkach — bez zbędnych pośredników.</p>
-      <p>Co ważne: <strong>serwis, montaż i ustawianie maszyn świadczę w Polsce</strong>. Nie trzeba czekać na ekipę zza granicy — potrafię skonfigurować, skalibrować i naprawić sorter samodzielnie, na miejscu u klienta.</p>
+      <p>Zajmuję się sortowaniem materiałów przy wykorzystaniu własnych maszyn od 2018 roku, dlatego rynek sorterów znam nie tylko od strony sprzedaży, ale przede wszystkim z praktycznego doświadczenia. Pracuję na własnych urządzeniach, testuję rozwiązania w rzeczywistych warunkach i wiem, jakie technologie sprawdzają się przy różnych materiałach oraz wymaganiach produkcyjnych.</p>
+
+<p>Współpracuję z wieloma producentami sorterów, ponieważ każdy z nich rozwija własne technologie i oferuje inne rozwiązania. Dzięki temu nie jestem ograniczony jedną marką — dobieram urządzenie odpowiednio do potrzeb klienta, rodzaju materiału oraz oczekiwanej wydajności. Stała konkurencja między producentami sprawia, że technologie szybko się rozwijają, dlatego na bieżąco śledzę nowe rozwiązania.</p>
+
+<p>Utrzymuję bezpośrednie relacje z producentami z Chin — nie tylko poprzez codzienną komunikację, ale również osobiste spotkania. Regularnie wymieniam doświadczenia i aktualizuję wiedzę techniczną, aby oferować sprawdzone rozwiązania. Realizowałem wiele współprac na terenie całej Polski, a także projekty dla klientów z zagranicy.</p>
+
+<p>Dzięki połączeniu praktycznej wiedzy, doświadczenia operatorskiego oraz kontaktów z wieloma producentami mogę pomóc dobrać technologię, która realnie sprawdzi się w konkretnej konfiguracji.</p>
       <div class="about-points">
         <div class="about-point">
           <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></div>
@@ -795,7 +772,7 @@
 <section class="sec why" id="dlaczego">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">Dlaczego my</span>
+      
       <h2>Zaufali nam</h2>
     </div>
     <div class="logo-slider reveal" id="logoSlider">
@@ -827,20 +804,16 @@
       <div class="contact-list">
         <div>
           <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><polyline points="22 6 12 13 2 6"/></svg></div>
-          <div><b>Krzysztof Borkowski</b><span>Foto-Vision Sortowanie</span></div>
+          <div><b>Krzysztof Borkowski</b></div>
         </div>
         <a href="tel:+48668957870">
           <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-          <div><b>+48 668 957 870</b><span>Zadzwoń — pon.–sob.</span></div>
+          <div><b>+48 668 957 870</b></div>
         </a>
         <a href="mailto:fotovisionsortowanie@vp.pl">
           <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><polyline points="22 6 12 13 2 6"/></svg></div>
-          <div><b>fotovisionsortowanie@vp.pl</b><span>Napisz do nas</span></div>
+          <div><b>fotovisionsortowanie@vp.pl</b></div>
         </a>
-        <div>
-          <div class="ico"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
-          <div><b>Polska</b><span>obsługa na terenie całego kraju</span></div>
-        </div>
       </div>
     </div>
 
@@ -886,15 +859,35 @@
       <div class="foot-brand">
         <img src="img/logo.png" alt="Foto-Vision Sortowanie">
         <p>Sortowanie optyczne materiałów sypkich oraz sprzedaż, wynajem i serwis sorterów i linii produkcyjnych. Krzysztof Borkowski.</p>
+        <div class="social-icons">
+  <a href="https://www.facebook.com/profile.php?id=100055386053666"
+     target="_blank"
+     rel="noopener"
+     aria-label="Facebook">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v8h4v-8h3l1-4h-4V9c0-.7.3-1 1-1z"/>
+    </svg>
+  </a>
+
+  <a href="https://scontent-waw2-2.xx.fbcdn.net/v/t1.6435-9/146374667_464530947910261_3663671525829293637_n.jpg?stp=dst-jpg_tt6&cstp=mx1438x1440&ctp=s1438x1440&_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=zwC7xd-AYsUQ7kNvwHFaMl7&_nc_oc=AdoFMy1tlfpvoJ71DBqF71s9an9BsgYgVqqIW4hyXe2GUkOyobmq4OmbS2UDJZglwhk&_nc_zt=23&_nc_ht=scontent-waw2-2.xx&_nc_gid=cnrB99w2UG2iicFtAitMJQ&_nc_ss=7c2a8&oh=00_AQD21JBq6zVMXqo4nez8T8_pE4KIJ3yGfNwaigdhbbVlFA&oe=6A880B13"
+     target="_blank"
+     rel="noopener"
+     aria-label="TikTok">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M15 3c.4 2.2 1.7 3.7 4 4v4c-1.5 0-2.9-.4-4-1.2v6.2c0 3.3-2.7 6-6 6s-6-2.7-6-6 2.7-6 6-6c.3 0 .7 0 1 .1v4.1c-.3-.1-.6-.2-1-.2-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2V3h4z"/>
+    </svg>
+  </a>
+</div>
       </div>
+      
       <div>
         <h4>Usługi</h4>
         <ul>
           <li><a href="#uslugi">Sortowanie na zlecenie</a></li>
           <li><a href="#uslugi">Sprzedaż maszyn</a></li>
-          <li><a href="#uslugi">Wynajem</a></li>
+          <li><a href="#uslugi">Wynajem maszyn</a></li>
           <li><a href="#uslugi">Linie produkcyjne</a></li>
-          <li><a href="#uslugi">Serwis i ustawianie</a></li>
+          <li><a href="#uslugi">Serwis i kalibracja</a></li>
         </ul>
       </div>
       <div>
@@ -902,8 +895,7 @@
         <ul>
           <li><a href="tel:+48668957870">+48 668 957 870</a></li>
           <li><a href="mailto:fotovisionsortowanie@vp.pl">fotovisionsortowanie@vp.pl</a></li>
-          <li><a href="#kontakt">Formularz wyceny</a></li>
-          <li><a href="#realizacje">Realizacje</a></li>
+          <li><a href="#kontakt">Formularz</a></li>
         </ul>
       </div>
     </div>
