@@ -135,6 +135,14 @@
   .sec-head{max-width:720px;margin:0 auto 54px;text-align:center}
   .sec-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);margin-bottom:16px}
   .sec-head p{color:var(--muted);font-size:1.1rem}
+  #technologia{
+    color:#fff;
+    background:
+      radial-gradient(900px 500px at 82% -10%,rgba(74,222,99,.24),transparent 60%),
+      linear-gradient(150deg,var(--green-900) 0%,var(--green-800) 52%,var(--green-700) 100%);
+  }
+  #technologia .sec-head p{color:rgba(255,255,255,.78)}
+  #technologia .eyebrow{background:rgba(255,255,255,.12);color:#fff}
 
   /* ---------- Services ---------- */
   .services{background:var(--green-025)}
@@ -216,15 +224,16 @@
   .tech-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-bottom:56px}
   .tech-step{
     background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-    padding:28px 24px;box-shadow:var(--shadow);
+    padding:28px 24px;box-shadow:var(--shadow);color:var(--ink);
+    display:grid;grid-template-columns:44px 1fr;column-gap:16px;row-gap:8px;align-items:start;
   }
   .tech-step .num{
     width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
-    font-weight:800;font-size:1.15rem;color:#fff;margin-bottom:16px;
+    font-weight:800;font-size:1.15rem;color:#fff;margin-bottom:0;
     background:linear-gradient(135deg,var(--green-600),var(--green-800));
   }
-  .tech-step h3{font-size:1.1rem;margin-bottom:8px}
-  .tech-step p{color:var(--muted);font-size:.94rem}
+  .tech-step h3{font-size:1.1rem;min-height:2.3em;margin-bottom:0;display:flex;align-items:center}
+  .tech-step p{grid-column:1 / -1;color:var(--muted);font-size:.94rem}
   .tech-features{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
   .tech-feature{
     display:flex;gap:16px;align-items:flex-start;
@@ -237,7 +246,7 @@
 
   /* ---------- Machines / Offer ---------- */
   .machines{background:var(--green-025)}
-  .machines-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch}
+  .machines-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;align-items:stretch}
   .machine-card{
     background:#fff;border:1px solid var(--line);border-radius:var(--radius);
     box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;
@@ -268,6 +277,9 @@
   .machine-body .btn{width:100%;justify-content:center;margin-top:22px}
   .machines-note{text-align:center;color:var(--muted);font-size:.95rem;margin-top:36px}
   .machines-note a{color:var(--green-700);font-weight:700}
+  .machines-slider{position:relative}
+  .machine-nav{display:none}
+  .machine-clone{display:none}
 
   /* ---------- Logo slider ---------- */
   .logo-slider{position:relative;max-width:760px;margin:0 auto}
@@ -341,7 +353,7 @@
   /* ---------- Footer ---------- */
   footer{background:var(--ink);color:rgba(255,255,255,.72);padding:52px 0 26px}
   .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:36px}
-  .foot-brand img{height:46px;filter:brightness(0) invert(1);margin-bottom:16px}
+  .foot-brand img{height:46px;filter:invert(1) grayscale(1) contrast(1.4);mix-blend-mode:screen;margin-bottom:16px}
   .foot-brand p{font-size:.95rem;max-width:340px}
   footer h4{color:#fff;font-size:1rem;margin-bottom:16px}
   footer ul{list-style:none;display:flex;flex-direction:column;gap:10px}
@@ -406,6 +418,7 @@
   }
   @media(max-width:680px){
     .hero-inner{display:block;padding:0}
+    .hero .eyebrow{display:none}
     .hero-inner > .reveal:first-child{
       position:absolute;top:28px;left:29px;right:24px;z-index:3;padding-left:0
     }
@@ -414,7 +427,7 @@
       content:"";position:absolute;inset:0;z-index:1;border-radius:22px;
       background:linear-gradient(180deg,rgba(15,61,26,.72),rgba(15,61,26,.28) 55%,rgba(15,61,26,.72))
     }
-    .hero-media video{position:relative;z-index:0;aspect-ratio:4/3}
+    .hero-media video{position:relative;z-index:0;aspect-ratio:4/3;min-height:430px}
     .hero-cta .btn-ghost{display:none}
     .nav-links{
       position:fixed;top:76px;left:0;right:0;background:#fff;flex-direction:column;
@@ -435,6 +448,25 @@
     .foot-grid{grid-template-columns:1fr}
     .sec{padding:64px 0}
     .hero-badge{left:0;bottom:-16px}
+    .machines-grid{
+      display:flex;max-width:none;margin:0;padding:0 0 12px;
+      gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;
+      scrollbar-width:none;-ms-overflow-style:none;
+    }
+    .machines-grid::-webkit-scrollbar{display:none}
+    .machines-grid .machine-card{
+      flex:0 0 100%;scroll-snap-align:start;
+    }
+    .machines-grid .machine-clone{display:flex}
+    .machine-nav{
+      display:grid;place-items:center;position:absolute;top:50%;z-index:3;
+      width:24px;height:64px;border:0;border-radius:8px;
+      background:rgba(107,125,114,.1);color:rgba(60,82,69,.72);cursor:pointer;
+      transform:translateY(-50%);
+    }
+    .machine-nav.prev{left:-20px}
+    .machine-nav.next{right:-20px}
+    .machine-nav:hover{background:rgba(107,125,114,.18);color:var(--ink-soft)}
     .logo-nav.prev{left:4px}
     .logo-nav.next{right:4px}
     .logo-slide .logo-card{height:180px;padding:28px}
@@ -504,7 +536,7 @@
     <div class="sec-head reveal">
       <span class="eyebrow">Zakres usług</span>
       <h2>Kompleksowo — od pojedynczej maszyny po całą linię</h2>
-      <p>Lorem Ipsum.</p>
+      <p></p>
     </div>
     <div class="grid-services">
 
@@ -643,7 +675,29 @@
       <p>Modele różnią się liczbą rynien i wydajnością — od kompaktowych po wysokowydajne.</p>
     </div>
 
-    <div class="machines-grid">
+    <div class="machines-slider">
+      <button class="machine-nav prev" type="button" aria-label="Poprzednia maszyna">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="machines-grid">
+
+      <!-- 1-rynnowy -->
+      <div class="machine-card reveal">
+        <div class="machine-head">
+          <div class="chutes">1<small>rynna</small></div>
+          <h3>Sorter 1-rynnowy</h3>
+          <p>Kompaktowy - łatwy do przemieszczania.</p>
+        </div>
+        <div class="machine-body">
+          <div class="spec"><span class="k">Liczba rynien</span><span class="v">1</span></div>
+          <div class="spec"><span class="k">Wydajność</span><span class="v tbd">do uzupełnienia</span></div>
+          <div class="spec"><span class="k">Liczba kamer</span><span class="v tbd">do uzupełnienia</span></div>
+          <div class="spec"><span class="k">Moc / zasilanie</span><span class="v tbd">do uzupełnienia</span></div>
+          <div class="spec"><span class="k">Zużycie powietrza</span><span class="v tbd">do uzupełnienia</span></div>
+          <div class="spec"><span class="k">Wymiary / masa</span><span class="v tbd">do uzupełnienia</span></div>
+          <a href="#kontakt" class="btn btn-primary">Zapytaj o wycenę</a>
+        </div>
+      </div>
 
       <!-- 3-rynnowy -->
       <div class="machine-card reveal">
@@ -700,6 +754,10 @@
         </div>
       </div>
 
+      </div>
+      <button class="machine-nav next" type="button" aria-label="Następna maszyna">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
     </div>
     <p class="machines-note">Potrzebujesz innej konfiguracji lub całej linii? <a href="#kontakt">Napisz do nas</a>.</p>
   </div>
@@ -737,10 +795,6 @@
       <p>Maszyny, materiał do sortowania oraz wspólne wdrożenia ze specjalistami z Chin.</p>
     </div>
     <div class="gallery-grid reveal">
-      <figure class="g-tall" data-full="img/team-machine.jpg">
-        <img src="img/team-machine.jpg" alt="Krzysztof Borkowski i specjalista z Chin przy sorterze">
-        <figcaption>Wdrożenie sortera ze specjalistą z Chin</figcaption>
-      </figure>
       <figure class="g-wide" data-full="img/sorter.jpg">
         <img src="img/sorter.jpg" alt="Sorter optyczny GroTech ZF300">
         <figcaption>Sorter optyczny GroTech ZF300</figcaption>
@@ -752,10 +806,6 @@
       <figure data-full="img/material.jpg">
         <img src="img/material.jpg" alt="Materiał przed sortowaniem i po sortowaniu">
         <figcaption>Materiał przed i po sortowaniu</figcaption>
-      </figure>
-      <figure class="g-wide" data-full="img/meeting.jpg">
-        <img src="img/meeting.jpg" alt="Spotkanie i konsultacje techniczne ze specjalistą z Chin">
-        <figcaption>Konsultacje techniczne z producentem</figcaption>
       </figure>
     </div>
   </div>
@@ -924,6 +974,43 @@
   });
   lb.addEventListener('click',()=>lb.classList.remove('open'));
   document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open');});
+
+  // Machine slider controls
+  const machineGrid=document.querySelector('.machines-grid');
+  if(machineGrid){
+    const machineCards=Array.from(machineGrid.querySelectorAll('.machine-card:not(.machine-clone)'));
+    const firstClone=machineCards[0].cloneNode(true);
+    const lastClone=machineCards[machineCards.length-1].cloneNode(true);
+    firstClone.classList.add('machine-clone');
+    lastClone.classList.add('machine-clone');
+    machineGrid.appendChild(firstClone);
+    machineGrid.insertBefore(lastClone,machineGrid.firstChild);
+
+    const machineSlideSize=()=>machineGrid.clientWidth+16;
+    const initialMachineIndex=machineCards.findIndex(card=>card.classList.contains('featured'));
+    const moveToRealSlide=()=>{
+      const slideSize=machineSlideSize();
+      if(machineGrid.scrollLeft >= slideSize*(machineCards.length+1)){
+        machineGrid.scrollLeft=slideSize;
+      }else if(machineGrid.scrollLeft <= 0){
+        machineGrid.scrollLeft=slideSize*machineCards.length;
+      }
+    };
+
+    window.addEventListener('load',()=>{
+      if(window.innerWidth<=680){
+        machineGrid.scrollLeft=machineSlideSize()*(initialMachineIndex+1);
+      }
+    });
+    machineGrid.addEventListener('scroll',moveToRealSlide);
+
+    document.querySelector('.machine-nav.prev').addEventListener('click',()=>{
+      machineGrid.scrollBy({left:-machineSlideSize(),behavior:'smooth'});
+    });
+    document.querySelector('.machine-nav.next').addEventListener('click',()=>{
+      machineGrid.scrollBy({left:machineSlideSize(),behavior:'smooth'});
+    });
+  }
 
 // Logo slider
 // Logo slider - infinite loop
