@@ -135,6 +135,8 @@
   .sec-head{max-width:720px;margin:0 auto 54px;text-align:center}
   .sec-head h2{font-size:clamp(1.8rem,3.4vw,2.6rem);margin-bottom:16px}
   .sec-head p{color:var(--muted);font-size:1.1rem}
+  .services .sec-head h2 .hl{color:var(--green-400)}
+  .services .sec-head h2 .nowrap{white-space:nowrap}
   #technologia{
     color:#fff;
     background:
@@ -417,6 +419,14 @@
     .about-media{max-width:440px;margin:0 auto}
   }
   @media(max-width:680px){
+    .trust{
+      background:
+        radial-gradient(900px 500px at 82% -10%,rgba(74,222,99,.24),transparent 60%),
+        linear-gradient(150deg,var(--green-900) 0%,var(--green-800) 45%,var(--green-700) 100%);
+      border-bottom:0;
+    }
+    .trust-item{color:#fff}
+    .trust-item svg{color:var(--green-400)}
     .hero-inner{display:block;padding:0}
     .hero .eyebrow{display:none}
     .hero-inner > .reveal:first-child{
@@ -535,7 +545,7 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <span class="eyebrow">Zakres usług</span>
-      <h2>Kompleksowo — od pojedynczej maszyny po całą linię</h2>
+      <h2><span class="hl">Kompleksowo</span> od pojedynczej maszyny po <span class="nowrap">całą linię</span></h2>
       <p></p>
     </div>
     <div class="grid-services">
@@ -842,7 +852,7 @@
   <div class="wrap contact-grid">
     <div class="reveal">
       <span class="eyebrow" style="background:rgba(255,255,255,.12);color:#fff">Kontakt</span>
-      <h2>Porozmawiajmy o Twoim materiale</h2>
+      <h2>Porozmawiajmy o Twojej inwestycji</h2>
       <p class="lead">Napisz lub zadzwoń — dobierzemy maszynę, przygotujemy wycenę sortowania, wynajmu lub sprzedaży, a w razie potrzeby przetestujemy Twój materiał.</p>
       <div class="contact-list">
         <div>
