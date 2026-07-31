@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# 1. Przekierowanie z www na wersję bez www
+RewriteCond %{HTTP_HOST} ^www\.foto-vision\.pl [NC]
+RewriteRule ^(.*)$ https://foto-vision.pl [R=301,L]
+
+# 2. Wymuszenie bezpiecznego szyfrowania HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
