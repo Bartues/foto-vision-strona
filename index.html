@@ -240,21 +240,58 @@
   .switch-card .go{color:var(--green-700);font-weight:700;font-size:.92rem}
 
   /* ---------- Gallery ---------- */
-  .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:16px}
-  .gallery-grid figure{
+  .gallery-filters{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+  .gallery-filters button{
+    font:inherit;font-weight:600;font-size:.95rem;cursor:pointer;
+    padding:9px 18px;border-radius:999px;border:1.5px solid var(--line);
+    background:#fff;color:var(--ink-soft);transition:.18s;
+  }
+  .gallery-filters button:hover{border-color:var(--green-400);color:var(--green-700)}
+  .gallery-filters button.active{background:var(--green-600);border-color:var(--green-600);color:#fff}
+  .gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:16px;grid-auto-flow:dense}
+  .gallery-grid figure.hidden{display:none}
+  .gallery-grid .play,.gallery-feature .play{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:1;
+    width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.92);
+    display:grid;place-items:center;color:var(--green-700);box-shadow:var(--shadow-lg);
+    transition:transform .25s;pointer-events:none;
+  }
+  .gallery-grid figure:hover .play,.gallery-feature figure:hover .play{transform:translate(-50%,-50%) scale(1.1)}
+  .gallery-grid figure,.gallery-feature figure{
     position:relative;border-radius:16px;overflow:hidden;box-shadow:var(--shadow);cursor:pointer;
     margin:0;
   }
-  .gallery-grid img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
-  .gallery-grid figure:hover img{transform:scale(1.07)}
-  .gallery-grid figcaption{
+  .gallery-grid img,.gallery-feature img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+  .gallery-grid figure:hover img,.gallery-feature figure:hover img{transform:scale(1.07)}
+  .gallery-grid figcaption,.gallery-feature figcaption{
     position:absolute;left:0;right:0;bottom:0;padding:16px;color:#fff;font-weight:600;font-size:.92rem;
     background:linear-gradient(to top,rgba(15,61,26,.85),transparent);
     opacity:0;transform:translateY(8px);transition:.25s;
   }
   .gallery-grid figure:hover figcaption{opacity:1;transform:translateY(0)}
+  .gallery-feature figcaption{opacity:1;transform:none;padding:40px 18px 16px;font-size:1rem}
   .g-tall{grid-row:span 2}
   .g-wide{grid-column:span 2}
+  .g-big{grid-column:span 2;grid-row:span 2}
+  /* 3 kafelki na stronie głównej */
+  .gallery-feature{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:18px;height:340px}
+  .gallery-more{text-align:center;margin-top:30px}
+  .gallery-more .btn span{opacity:.75;font-weight:600}
+  /* Album — pełna galeria */
+  .album{position:fixed;inset:0;z-index:150;background:var(--green-025);overflow-y:auto;
+    display:none;overscroll-behavior:contain}
+  .album.open{display:block}
+  body.album-open{overflow:hidden}
+  .album-bar{position:sticky;top:0;z-index:2;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line)}
+  .album-bar-inner{display:flex;align-items:center;gap:20px;padding-top:14px;padding-bottom:14px}
+  .album-bar h3{font-size:1.25rem;white-space:nowrap}
+  .album-bar h3 span{color:var(--muted);font-weight:600;font-size:1rem}
+  .album-bar .gallery-filters{flex:1}
+  .album-close{width:44px;height:44px;flex:none;border-radius:50%;border:1px solid var(--line);background:#fff;
+    font-size:1.8rem;line-height:1;cursor:pointer;color:var(--ink);transition:.2s}
+  .album-close:hover{background:var(--green-600);color:#fff;border-color:var(--green-600)}
+  .album-body{padding-top:28px;padding-bottom:48px}
 
   /* ---------- Why ---------- */
   .why{background:var(--green-025)}
@@ -439,8 +476,20 @@
   .lb{position:fixed;inset:0;background:rgba(9,26,14,.92);z-index:200;display:none;
     place-items:center;padding:30px;cursor:zoom-out}
   .lb.open{display:grid}
-  .lb img{max-width:92vw;max-height:88vh;border-radius:12px;box-shadow:var(--shadow-lg)}
+  .lb img,.lb video{max-width:92vw;max-height:84vh;border-radius:12px;box-shadow:var(--shadow-lg);cursor:default}
+  .lb video{background:#000}
+  .lb [hidden]{display:none!important}
+  .lb .lb-cap{position:absolute;bottom:22px;left:0;right:0;text-align:center;color:#fff;font-weight:600;padding:0 70px}
   .lb .close{position:absolute;top:22px;right:28px;color:#fff;font-size:2.4rem;cursor:pointer;line-height:1}
+  .lb .lb-nav{
+    position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;border-radius:50%;
+    border:0;background:rgba(255,255,255,.14);color:#fff;font-size:1.8rem;line-height:1;cursor:pointer;
+    display:grid;place-items:center;transition:.2s;
+  }
+  .lb .lb-nav:hover{background:var(--green-600)}
+  .lb .lb-prev{left:18px}
+  .lb .lb-next{right:18px}
+  @media(max-width:680px){.lb{padding:12px}.lb .lb-nav{width:42px;height:42px;font-size:1.4rem}.lb .lb-prev{left:6px}.lb .lb-next{right:6px}}
 
   /* ---------- Reveal ---------- */
   .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
@@ -457,8 +506,13 @@
     .tech-steps{grid-template-columns:repeat(2,1fr)}
     .tech-features{grid-template-columns:repeat(2,1fr)}
     .machines-grid{grid-template-columns:1fr;max-width:520px;margin:0 auto}
-    .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:180px}
+    .gallery-grid{grid-template-columns:repeat(3,1fr);grid-auto-rows:180px}
     .g-wide{grid-column:span 2}
+    .gallery-feature{grid-template-columns:1fr 1fr;grid-template-rows:280px 200px;height:auto}
+    .gallery-feature figure:first-child{grid-column:span 2}
+    .album-bar-inner{flex-wrap:wrap;gap:12px}
+    .album-bar .gallery-filters{order:3;flex-basis:100%;justify-content:flex-start}
+    .album-close{margin-left:auto}
     .foot-grid{grid-template-columns:1fr 1fr}
     .about-media{max-width:440px;margin:0 auto}
   }
@@ -502,8 +556,13 @@
     .why-grid{grid-template-columns:1fr}
     .tech-steps{grid-template-columns:1fr}
     .tech-features{grid-template-columns:1fr}
-    .gallery-grid{grid-template-columns:1fr;grid-auto-rows:220px}
-    .g-wide,.g-tall{grid-column:auto;grid-row:auto}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);grid-auto-rows:140px;gap:10px}
+    .gallery-feature{grid-template-rows:220px 150px;gap:10px}
+    .gallery-feature figcaption{font-size:.85rem;padding:30px 12px 10px}
+    .gallery-feature .play{width:48px;height:48px}
+    .album-bar .gallery-filters{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -24px;padding:0 24px}
+    .album-bar .gallery-filters button{flex:none;padding:7px 14px;font-size:.88rem}
+    .album-body{padding-top:16px}
     .about-points{grid-template-columns:1fr}
     .foot-grid{grid-template-columns:1fr}
     .sec{padding:64px 0}
@@ -955,24 +1014,127 @@
     <div class="sec-head reveal">
       <span class="eyebrow">Realizacje</span>
       <h2>Z naszej pracy i współpracy z producentami</h2>
-      <p>Maszyny, materiał do sortowania oraz wspólne wdrożenia ze specjalistami z Chin.</p>
+      <p>Sortery, kompletne linie technologiczne oraz dostawy i montaże u klientów — od kontenera po uruchomienie.</p>
     </div>
-    <div class="gallery-grid reveal">
-      <figure class="g-wide" data-full="img/sorter.jpg">
-        <img src="img/sorter.jpg" alt="Sorter optyczny GroTech ZF300">
-        <figcaption>Sorter optyczny GroTech ZF300</figcaption>
+    <div class="gallery-feature reveal">
+      <figure data-open="img/gallery/linia-u-klienta.webp">
+        <img src="img/gallery/linia-u-klienta.webp" alt="Kompletna linia czyszcząca zboże ustawiona u klienta" loading="lazy">
+        <figcaption>Linia czyszcząca u klienta</figcaption>
       </figure>
-      <figure data-full="img/inspection.jpg">
-        <img src="img/inspection.jpg" alt="Inspekcja materiału na linii">
-        <figcaption>Kontrola materiału na linii</figcaption>
+      <figure data-open="video/linia-hala.mp4">
+        <img src="img/gallery/poster-linia-hala.webp" alt="Film: linia technologiczna w hali" loading="lazy">
+        <span class="play"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <figcaption>Wideo: linia technologiczna w hali</figcaption>
       </figure>
-      <figure data-full="img/material.jpg">
-        <img src="img/material.jpg" alt="Materiał przed sortowaniem i po sortowaniu">
-        <figcaption>Materiał przed i po sortowaniu</figcaption>
+      <figure data-open="img/gallery/dostawa-kontener.webp">
+        <img src="img/gallery/dostawa-kontener.webp" alt="Ciężarówka z kontenerem morskim z maszynami" loading="lazy">
+        <figcaption>Dostawa maszyn w kontenerze</figcaption>
       </figure>
+    </div>
+    <div class="gallery-more reveal">
+      <button class="btn btn-dark" id="albumOpen">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        Zobacz wszystkie realizacje <span id="albumCount"></span>
+      </button>
     </div>
   </div>
 </section>
+
+<!-- ============ ALBUM (pełna galeria) ============ -->
+<div class="album" id="album" role="dialog" aria-modal="true" aria-label="Wszystkie realizacje">
+  <div class="album-bar">
+    <div class="wrap album-bar-inner">
+      <h3>Realizacje <span id="albumCount2"></span></h3>
+      <div class="gallery-filters" id="galleryFilters">
+        <button class="active" data-filter="all">Wszystkie</button>
+        <button data-filter="sortowanie">Sortowanie</button>
+        <button data-filter="linie">Linie technologiczne</button>
+        <button data-filter="dostawa">Dostawa i montaż</button>
+        <button data-filter="wideo">Wideo</button>
+      </div>
+      <button class="album-close" id="albumClose" aria-label="Zamknij galerię">&times;</button>
+    </div>
+  </div>
+  <div class="wrap album-body">
+    <div class="gallery-grid" id="galleryGrid">
+      <figure class="g-big" data-cat="linie" data-full="img/gallery/linia-u-klienta.webp">
+        <img src="img/gallery/linia-u-klienta.webp" alt="Kompletna linia czyszcząca zboże ustawiona u klienta" loading="lazy">
+        <figcaption>Linia czyszcząca u klienta</figcaption>
+      </figure>
+      <figure class="g-wide" data-cat="linie wideo" data-video="video/linia-hala.mp4">
+        <img src="img/gallery/poster-linia-hala.webp" alt="Film: linia technologiczna w hali" loading="lazy">
+        <span class="play"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <figcaption>Wideo: linia technologiczna w hali</figcaption>
+      </figure>
+      <figure data-cat="sortowanie" data-full="img/sorter.jpg">
+        <img src="img/sorter.jpg" alt="Sorter optyczny GroTech ZF300" loading="lazy">
+        <figcaption>Sorter optyczny GroTech ZF300</figcaption>
+      </figure>
+      <figure data-cat="sortowanie wideo" data-video="video/ziarno-po-czyszczeniu.mp4">
+        <img src="img/gallery/poster-ziarno.webp" alt="Film: czyste ziarno na wyjściu z maszyny" loading="lazy">
+        <span class="play"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <figcaption>Wideo: ziarno po czyszczeniu</figcaption>
+      </figure>
+      <figure class="g-wide" data-cat="dostawa" data-full="img/gallery/dostawa-kontener.webp">
+        <img src="img/gallery/dostawa-kontener.webp" alt="Ciężarówka z kontenerem morskim z maszynami" loading="lazy">
+        <figcaption>Dostawa maszyn w kontenerze</figcaption>
+      </figure>
+      <figure class="g-tall" data-cat="sortowanie" data-full="img/gallery/sorter-panel.webp">
+        <img src="img/gallery/sorter-panel.webp" alt="Sorter z panelem sterowania przygotowany do wysyłki" loading="lazy">
+        <figcaption>Sorter przed wysyłką od producenta</figcaption>
+      </figure>
+      <figure class="g-tall" data-cat="dostawa" data-full="img/gallery/dostawa-rozladunek.webp">
+        <img src="img/gallery/dostawa-rozladunek.webp" alt="Rozładunek maszyn z kontenera" loading="lazy">
+        <figcaption>Rozładunek kontenera</figcaption>
+      </figure>
+      <figure class="g-wide" data-cat="linie" data-full="img/gallery/linia-hala-1.webp">
+        <img src="img/gallery/linia-hala-1.webp" alt="Linia czyszcząca z cyklonem i podnośnikiem kubełkowym" loading="lazy">
+        <figcaption>Linia czyszcząca z cyklonem i elewatorem</figcaption>
+      </figure>
+      <figure data-cat="sortowanie" data-full="img/material.jpg">
+        <img src="img/material.jpg" alt="Materiał przed sortowaniem i po sortowaniu" loading="lazy">
+        <figcaption>Materiał przed i po sortowaniu</figcaption>
+      </figure>
+      <figure class="g-wide" data-cat="linie" data-full="img/gallery/maszyna-czyszczaca.webp">
+        <img src="img/gallery/maszyna-czyszczaca.webp" alt="Maszyna czyszcząca po rozładunku" loading="lazy">
+        <figcaption>Maszyna czyszcząca po rozładunku</figcaption>
+      </figure>
+      <figure class="g-tall" data-cat="dostawa wideo" data-video="video/montaz-u-klienta.mp4">
+        <img src="img/gallery/poster-montaz.webp" alt="Film: montaż linii u klienta" loading="lazy">
+        <span class="play"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <figcaption>Wideo: montaż u klienta</figcaption>
+      </figure>
+      <figure data-cat="sortowanie" data-full="img/inspection.jpg">
+        <img src="img/inspection.jpg" alt="Inspekcja materiału na linii" loading="lazy">
+        <figcaption>Kontrola materiału na linii</figcaption>
+      </figure>
+      <figure class="g-wide" data-cat="linie" data-full="img/gallery/linia-hala-2.webp">
+        <img src="img/gallery/linia-hala-2.webp" alt="Kompletna linia technologiczna w hali" loading="lazy">
+        <figcaption>Kompletna linia technologiczna</figcaption>
+      </figure>
+      <figure class="g-tall" data-cat="linie" data-full="img/gallery/podnosniki-1.webp">
+        <img src="img/gallery/podnosniki-1.webp" alt="Podnośniki kubełkowe w hali" loading="lazy">
+        <figcaption>Podnośniki kubełkowe</figcaption>
+      </figure>
+      <figure data-cat="linie" data-full="img/gallery/czyszczalnia-wibracyjna.webp">
+        <img src="img/gallery/czyszczalnia-wibracyjna.webp" alt="Czyszczalnia wibracyjna" loading="lazy">
+        <figcaption>Czyszczalnia wibracyjna</figcaption>
+      </figure>
+      <figure class="g-wide" data-cat="dostawa" data-full="img/gallery/montaz-elementy.webp">
+        <img src="img/gallery/montaz-elementy.webp" alt="Elementy linii przygotowane do montażu" loading="lazy">
+        <figcaption>Elementy linii przed montażem</figcaption>
+      </figure>
+      <figure class="g-wide" data-cat="linie" data-full="img/gallery/linia-hala-3.webp">
+        <img src="img/gallery/linia-hala-3.webp" alt="Linia czyszcząca, czyszczalnia wibracyjna i elewator w hali" loading="lazy">
+        <figcaption>Ciąg technologiczny w hali</figcaption>
+      </figure>
+      <figure class="g-tall" data-cat="linie" data-full="img/gallery/podnosniki-2.webp">
+        <img src="img/gallery/podnosniki-2.webp" alt="Elewatory i przenośnik w hali" loading="lazy">
+        <figcaption>Elewatory i przenośnik</figcaption>
+      </figure>
+    </div>
+  </div>
+</div>
 
 <!-- ============ WHY ============ -->
 <section class="sec why" id="dlaczego">
@@ -988,7 +1150,7 @@
       <div class="logo-viewport">
         <div class="logo-track" id="logoTrack">
           <div class="logo-slide"><div class="logo-card"><img src="biobabalscy.png" alt="Biobabalscy"></div></div>
-          <div class="logo-slide"><div class="logo-card"><img src="Olewnik_Logotyp.png" alt="Olewnik"></div></div>
+          <div class="logo-slide"><div class="logo-card"><img src="olewnik-expo.png" alt="Olewnik-Expo Skup Zbóż"></div></div>
           <div class="logo-slide"><div class="logo-card"><img src="Milde_logo.jpg" alt="Milde"></div></div>
           <div class="logo-slide"><div class="logo-card"><img src="ZIelenin_logo.png" alt="Zielenin"></div></div>
         </div>
@@ -1120,7 +1282,14 @@
 </footer>
 
 <!-- ============ LIGHTBOX ============ -->
-<div class="lb" id="lightbox"><span class="close">&times;</span><img src="" alt=""></div>
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Podgląd galerii">
+  <span class="close" aria-label="Zamknij">&times;</span>
+  <button class="lb-nav lb-prev" aria-label="Poprzednie">&#8249;</button>
+  <img src="" alt="">
+  <video controls playsinline preload="metadata" hidden></video>
+  <button class="lb-nav lb-next" aria-label="Następne">&#8250;</button>
+  <div class="lb-cap"></div>
+</div>
 
 <script>
   // Mobile nav
@@ -1137,13 +1306,77 @@
   },{threshold:.12});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  // Lightbox
-  const lb=document.getElementById('lightbox'),lbImg=lb.querySelector('img');
-  document.querySelectorAll('.gallery-grid figure').forEach(f=>{
-    f.addEventListener('click',()=>{lbImg.src=f.dataset.full;lb.classList.add('open');});
+  // Gallery filters
+  const figs=Array.from(document.querySelectorAll('#galleryGrid figure'));
+  document.querySelectorAll('#galleryFilters button').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('#galleryFilters button').forEach(b=>b.classList.toggle('active',b===btn));
+      const f=btn.dataset.filter;
+      figs.forEach(fig=>fig.classList.toggle('hidden',f!=='all'&&!fig.dataset.cat.split(' ').includes(f)));
+    });
   });
-  lb.addEventListener('click',()=>lb.classList.remove('open'));
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')lb.classList.remove('open');});
+
+  // Lightbox (zdjęcia + wideo)
+  const lb=document.getElementById('lightbox'),lbImg=lb.querySelector('img'),
+        lbVid=lb.querySelector('video'),lbCap=lb.querySelector('.lb-cap');
+  let cur=-1;
+  const visibleFigs=()=>figs.filter(f=>!f.classList.contains('hidden'));
+  function show(fig){
+    const list=visibleFigs();cur=list.indexOf(fig);
+    const cap=fig.querySelector('figcaption');lbCap.textContent=cap?cap.textContent:'';
+    lbVid.pause();
+    if(fig.dataset.video){
+      lbImg.hidden=true;lbImg.removeAttribute('src');
+      lbVid.hidden=false;lbVid.src=fig.dataset.video;lbVid.play().catch(()=>{});
+    }else{
+      lbVid.hidden=true;lbVid.removeAttribute('src');lbVid.load();
+      lbImg.hidden=false;lbImg.src=fig.dataset.full;lbImg.alt=fig.querySelector('img').alt;
+    }
+    lb.classList.add('open');
+  }
+  function step(d){const list=visibleFigs();if(!list.length)return;show(list[(cur+d+list.length)%list.length]);}
+  function closeLb(){lb.classList.remove('open');lbVid.pause();lbVid.removeAttribute('src');lbVid.load();}
+  figs.forEach(f=>f.addEventListener('click',()=>show(f)));
+
+  // Album (pełna galeria)
+  const album=document.getElementById('album');
+  const cnt=`(${figs.length})`;
+  document.getElementById('albumCount').textContent=cnt;
+  document.getElementById('albumCount2').textContent=cnt;
+  function openAlbum(){album.classList.add('open');document.body.classList.add('album-open');album.scrollTop=0;}
+  function closeAlbum(){album.classList.remove('open');document.body.classList.remove('album-open');}
+  document.getElementById('albumOpen').addEventListener('click',openAlbum);
+  document.getElementById('albumClose').addEventListener('click',closeAlbum);
+  // 3 kafelki na stronie -> podgląd z nawigacją po wszystkich realizacjach
+  document.querySelectorAll('.gallery-feature figure').forEach(f=>{
+    f.addEventListener('click',()=>{
+      document.querySelector('#galleryFilters [data-filter="all"]').click();
+      const t=figs.find(x=>(x.dataset.full||x.dataset.video)===f.dataset.open);
+      if(t)show(t);
+    });
+  });
+
+  lb.querySelector('.lb-prev').addEventListener('click',e=>{e.stopPropagation();step(-1);});
+  lb.querySelector('.lb-next').addEventListener('click',e=>{e.stopPropagation();step(1);});
+  lbImg.addEventListener('click',e=>e.stopPropagation());
+  lbVid.addEventListener('click',e=>e.stopPropagation());
+  lb.addEventListener('click',closeLb);
+  document.addEventListener('keydown',e=>{
+    if(!lb.classList.contains('open')){
+      if(e.key==='Escape'&&album.classList.contains('open'))closeAlbum();
+      return;
+    }
+    if(e.key==='Escape')closeLb();
+    else if(e.key==='ArrowLeft')step(-1);
+    else if(e.key==='ArrowRight')step(1);
+  });
+  // Swipe na telefonie
+  let tx=null;
+  lb.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+  lb.addEventListener('touchend',e=>{
+    if(tx===null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;
+    if(Math.abs(dx)>50)step(dx<0?1:-1);
+  });
 
   // Machine slider controls
   const machineGrid=document.querySelector('.machines-grid');
